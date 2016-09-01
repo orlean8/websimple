@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Web App - Result</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<div class="container">
+    <h1>Result(s)</h1>
+
+    <table style="width:100%">
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+        </tr>
+
+        {{with .Records}}
+        {{range .}}
+         <tr>
+             <td>{{.Name}}</td>
+             <td>{{.Val}}</td>
+         </tr>
+        {{end}}
+        {{end}}
+
+        </tr>
+    </table>
+    <h2>Status {{.Status}} </h2>
+    </br>
+    <a href="/start">start</a>
+</div>
+</body>
+</html>

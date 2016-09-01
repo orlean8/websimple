@@ -3,13 +3,15 @@ package database
 import (
 	"sync"
 	"math/rand"
-
 )
 
+type ValuePair struct {
+	Name string
+	Val int
+}
 /*
 	Simple key pair value DB in memory
- */
-
+*/
 type inMemoryDB struct {
 	m map[string]int
 	lck sync.RWMutex
@@ -30,7 +32,21 @@ func (db *inMemoryDB) Get (name string) (int,string) {
 		return  0,"Not Found"
 	}
 
-	return value,""
+	return value,"OK"
+}
+
+func (db *inMemoryDB) GetAll () ([]ValuePair, string) {
+
+	db.lck.RLock()
+	defer db.lck.RUnlock()
+
+	result := []ValuePair{}
+
+	for key, value := range db.m {
+		result=append(result, ValuePair{key, value})
+	}
+
+	return result,"OK"
 }
 /*
 	the function may return some execution code
@@ -42,8 +58,6 @@ func (db *inMemoryDB) Set (name string)  {
 	defer db.lck.Unlock()
 // 	to every string is added random value. Simulating a business process
 	db.m[name]=rand.Int()
-
-
 }
 
 /*
